@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLana Estética</title>
+        
+    <script src="https://kit.fontawesome.com/c1df782baf.js"></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+
+<body>
+    <!--INICIO CABEÇALHO DO SITE - MENU -->
+
+    
+    <header>
+        <!--INICIO LOGOMARCA -->
+        <div class="logo">
+            <figure>
+                <img src="assets/img/logo/logo.png" alt="LLana Estética">
+            </figure>
+        </div>
+        <!--FIM LOGOMARCA -->
+        <Nav class ="menuPrincipal">
+            <a href="index.html" title="Página Inicial" >Inicio</a>
+            <a href="empresa.html" title="Sobre a Clínica" >Sobre Nós</a>
+            <a href="servicos.html" title="Serviços do Site" >Serviços</a>
+            <a href="medicos.html" title="Médicos do Site" >Médicos</a>
+            <a href="blog.html" title="Notícias do Site" >Blogs</a>
+            <a href="depoimentos.html" title="Depoimentos do site" >Cases</a>
+            <a href="" title="Fale Conosco" >Contato</a>
+        </Nav>
+        <!--Inicio icone do Celular e botão CTA menu links do site menu e logomarca-->
+        <div class="icone-direita">
+            <div id="menuCelular" class="fa fa-bars"> </div>
+            <a class="btn" title="Agendar Consulta">Agendar Consulta</a>
+        </div>
+        <!--FIM icone do Celular e botão CTA menu links do site menu e logomarca-->
+    </header>
+
+        <!-- ===== Seção Agendar ===== -->
+    <section id="agendar">
+    <div class="agendar-wrap">
+        <div class="agendar-head">
+        <h3>Agendar com a LLana Estética</h3>
+        <span class="tag-rosa">1 profissional • horários do dia</span>
+        </div>
+
+        <p class="small" style="margin-bottom:1rem">
+        Escolha o serviço, a data e um horário livre. O valor aparece automaticamente.
+        </p>
+
+        <form id="formAgendar" class="form-grid">
+        <!-- Serviço -->
+        <div>
+            <label class="small">Serviço</label>
+            <select id="servico" required></select>
+        </div>
+
+        <!-- Preço (auto) -->
+        <div>
+            <label class="small">Preço</label>
+            <input id="preco" class="input" type="text" readonly>
+        </div>
+
+        <!-- Data -->
+        <div>
+            <label class="small">Data</label>
+            <input id="data" class="input" type="date" required>
+        </div>
+
+        <!-- Horário -->
+        <div>
+            <label class="small">Horário</label>
+            <select id="hora" required></select>
+        </div>
+
+        <!-- Nome -->
+        <div class="full">
+            <label class="small">Seu nome</label>
+            <input id="nome" class="input" type="text" placeholder="Seu nome completo" required>
+        </div>
+
+        <!-- Telefone (WhatsApp) -->
+        <div class="full">
+            <label class="small">WhatsApp</label>
+            <input id="whats" class="input" type="tel" placeholder="(DDD) 9 9999-9999" required>
+        </div>
+
+        <div class="full" style="display:flex; gap:1rem; align-items:center; justify-content:flex-end">
+            <button type="submit" class="btn-rosa">Confirmar pelo WhatsApp</button>
+        </div>
+
+        <p id="msg" class="small full"></p>
+        </form>
+    </div>
+    </section>
+    <!-- ===== /Seção Agendar ===== -->
+
+    
+    <main>
+        <!--Inicio SLIDE destaque do site-->
+        <div class="swiper">
+
+            <div class="swiper-wrapper">
+                <!--Inicio item slide-->
+                <div class="swiper-slide slide">
+                    <div class="destaque-inicial">
+                        <div class="destaque-bloco">
+                            <div class="destaque-esquerdo-conteudo">
+                                <span>Seja Bem vindo á nossa clínicia</span>
+
+                                <h2>Cuidamos da <br>sua estética</h2>
+                                <p class="destaque-descricao">
+                                    Garantimos um atendimento especiálizado
+                                </p>
+
+                                <div class="destaque-btn">
+                                    <a href="">Saiba Mais</a>
+                                    <a href="" class="destaque-btn-2">Agendar Consulta</a>
+                                </div>
+
+                            </div>
+                            <div class="destaque-direito-conteudo">
+                                <img src="assets/img/slide/item-1.png" alt="">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!--Fim item slide-->
+                <!--Inicio item slide-->
+                <div class="swiper-slide slide">
+                    <div class="destaque-inicial">
+                        <div class="destaque-bloco">
+                            <div class="destaque-esquerdo-conteudo">
+                                <span>Seja Bem vindo á nossa clínicia</span>
+
+                                <h2>Cuidamos da <br>sua estética</h2>
+                                <p class="destaque-descricao">
+                                    Garantimos um atendimento especiálizado
+                                </p>
+
+                                <div class="destaque-btn">
+                                    <a href="">Saiba Mais</a>
+                                    <a href="" class="destaque-btn-2">Agendar Consulta</a>
+                                </div>
+
+                            </div>
+                            <div class="destaque-direito-conteudo">
+                                <img src="assets/img/slide/item-2.png" alt="">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!--Fim item slide-->
+
+            </div>
+
+
+        </div>
+
+        <!--FIM SLIDE destaque do site-->
+    </main>
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" async></script>
+    <script src="assets/js/ms.js"></script>
+    <!--FIM CABEÇALHO DO SITE - MENU -->
+</body>
+</html>
