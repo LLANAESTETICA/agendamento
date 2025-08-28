@@ -1,6 +1,6 @@
 /* === CORES (rosa) === */
 :root{
-  --mscor:#fdd2fd;          /* rosa principal */
+  --mscor:#af486f;          /* rosa principal */
   --corPrinciapal:#e98ad994;  /* rosa claro para hover */
   --corBranca:#FFF;
   --corSombras: rgba(0,0,0,.08);
@@ -30,7 +30,21 @@
 .icone-direita .btn:hover{ background-color: var(--corPrinciapal); }
 
 /* slide (mantém) */
-.destaque-inicial{ background-image: url(../img/slide/fundo2.png); }
+.destaque-inicial {
+    background-image: url(../img/slide/fundo2.png);
+    width: 100%;
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover; 
+    background-repeat: no-repeat; /* <- adicione isso */
+}
+.destaque-direito-conteudo img {
+    position: absolute;
+    bottom: 0;          /* gruda no chão do bloco */
+    left: 50%;          /* centraliza */
+    transform: translateX(-50%);
+    max-height: 90%;    /* evita ultrapassar o fundo */
+}
 
 /* ===== Seção Agendar ===== */
 #agendar{
