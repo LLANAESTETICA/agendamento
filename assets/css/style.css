@@ -1,7 +1,7 @@
 /* === CORES (rosa) === */
 :root{
-  --mscor:#E91E63;          /* rosa principal */
-  --corPrinciapal:#FF5C8A;  /* rosa claro para hover */
+  --mscor:#fdd2fd;          /* rosa principal */
+  --corPrinciapal:#e98ad994;  /* rosa claro para hover */
   --corBranca:#FFF;
   --corSombras: rgba(0,0,0,.08);
   --CorDestaque:#FFC1D6;    /* detalhe */
@@ -16,6 +16,9 @@
 
 /* botão CTA no header */
 .icone-direita .btn{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   background-color: var(--mscor);
   font-size: 1.6rem;
   color: var(--corBranca);
