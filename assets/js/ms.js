@@ -1,25 +1,63 @@
 /* ====== API do Google Apps Script ====== */
-const API = 'https://script.google.com/macros/s/AKfycbyAwNm0drO0i_gaazU7bbvTPfGQYiWckaeGFDBAB-RWQNoEDN9RE0Jwtq9N0cYmNk7s/exec'; // cole a URL /exec aqui
+const API = 'https://script.google.com/macros/s/AKfycbzHNgC9YS6HQ1Eus0lu6fatBTaS2Ycq1JQtCkceNPv9y8w8gNBR0-Bnq4BI0RLx1nwM/exec';
 const ESCONDER_OCUPADOS = true; // se false, mostra desabilitado com risco
 
-/* ====== Serviços (nome, duração, preço) ====== */
+/* ===== Swiper (se estiver usando) ===== */
+try {
+  new Swiper('.swiper', {
+    loop: true,
+    autoplay: { delay: 4500 },
+    pagination: { el: '.swiper-pagination' },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+  });
+} catch(e){}
+
+/* ==== Utils ==== */
+const $ = (sel) => document.querySelector(sel);
+
+/* ==== Serviços (nome, duração, preço) ==== */
 const SERVICOS = [
-  { id:"limpeza",   nome:"Limpeza de pele", duracao:60, preco:120 },
-  { id:"sobrancelha", nome:"Design de sobrancelha", duracao:30, preco:45 },
-  { id:"depilacao", nome:"Depilação (meia perna)", duracao:45, preco:70 },
-  { id:"massagem",  nome:"Massagem relaxante", duracao:60, preco:130 },
+  { id:"limpeza",     nome:"Limpeza de pele",        duracao:60, preco:120 },
+  { id:"sobrancelha", nome:"Design de sobrancelha",  duracao:30, preco:45  },
+  { id:"depilacao",   nome:"Depilação (meia perna)", duracao:45, preco:70  },
+  { id:"massagem",    nome:"Massagem relaxante",     duracao:60, preco:130 },
 ];
 
+/* ==== Popular select de serviços + preço inicial ==== */
+function popularServicos(){
+  const sel = $('#servico');
+  if(!sel) return;
+  sel.innerHTML = '';
+  SERVICOS.forEach(s=>{
+    const o = document.createElement('option');
+    o.value = s.id;
+    o.textContent = s.nome;
+    sel.appendChild(o);
+  });
+  const s0 = SERVICOS[0];
+  if ($('#preco') && s0) $('#preco').value = `R$ ${s0.preco.toFixed(2).replace('.',',')}`;
+}
+
+/* ==== Carregar horários da API ==== */
 async function carregarHorarios(){
-  const data = $('#data').value;
-  const serv = SERVICOS.find(s=>s.id===$('#servico').value) || SERVICOS[0];
-  if(!data) return;
+  const data = $('#data')?.value;
+  const servSel = $('#servico')?.value;
+  const serv = SERVICOS.find(s=>s.id===servSel) || SERVICOS[0];
+  if(!data || !serv) return;
 
   const url = `${API}?fn=livres&data=${data}&dur=${serv.duracao}`;
-  const resp = await fetch(url, {cache:'no-store'}).then(r=>r.json());
-  const slots = (resp.ok ? resp.data : []) || [];
+  let resp;
+  try {
+    resp = await fetch(url, {cache:'no-store'}).then(r=>r.json());
+  } catch (e) {
+    console.error('Erro ao buscar horários:', e);
+    return;
+  }
+  const slots = (resp && resp.ok ? resp.data : []) || [];
 
-  const sel = $('#hora'); sel.innerHTML = '';
+  const sel = $('#hora');
+  if(!sel) return;
+  sel.innerHTML = '';
   for(const s of slots){
     if(ESCONDER_OCUPADOS && s.ocupado) continue;
     const o = document.createElement('option');
@@ -30,47 +68,79 @@ async function carregarHorarios(){
   }
   if(!sel.options.length){
     const o = document.createElement('option');
-    o.textContent = 'Sem horários livres neste dia'; o.value=''; o.disabled = true; sel.appendChild(o);
+    o.textContent = 'Sem horários livres neste dia';
+    o.value=''; o.disabled = true;
+    sel.appendChild(o);
   }
 }
 
+/* ==== Eventos ==== */
+$('#servico')?.addEventListener('change', () => {
+  const s = SERVICOS.find(x => x.id === $('#servico').value);
+  if (s && $('#preco')) $('#preco').value = `R$ ${s.preco.toFixed(2).replace('.',',')}`;
+  carregarHorarios();
+});
 $('#data')?.addEventListener('change', carregarHorarios);
-$('#servico')?.addEventListener('change', carregarHorarios);
-window.addEventListener('DOMContentLoaded', carregarHorarios);
 
+/* ====== Reserva antes de abrir WhatsApp ====== */
 /* ====== Reserva antes de abrir WhatsApp ====== */
 $('#formAgendar')?.addEventListener('submit', async (e)=>{
   e.preventDefault();
   const serv = SERVICOS.find(s=>s.id===$('#servico').value) || SERVICOS[0];
   const payload = {
-    data: $('#data').value,
-    hora: $('#hora').value,
+    data:  $('#data').value,
+    hora:  $('#hora').value,
     dur_min: serv.duracao,
     servico: serv.nome,
-    nome: $('#nome').value.trim(),
+    nome:  $('#nome').value.trim(),
     whats: $('#whats').value.trim()
   };
   if(!payload.hora){ $('#msg').textContent='Escolha um horário.'; return; }
 
-  const r = await fetch(API, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
-  }).then(x=>x.json()).catch(()=>({ok:false}));
+  let r;
+  try{
+    const resp = await fetch(API, { method:'POST', body: new URLSearchParams(payload) });
+    const txt  = await resp.text();
+    console.log('POST /exec →', txt);    // <- veja no console a resposta crua
+    r = JSON.parse(txt);
+  }catch(e){
+    $('#msg').textContent = 'Falha ao reservar: ' + e.message;
+    console.error('Erro ao reservar:', e);
+    return;
+  }
 
-  if(!r.ok || !r.data?.reservado){
-    $('#msg').textContent = 'Esse horário acabou de ser reservado. Tente outro.';
+  if(!r.ok){
+    $('#msg').textContent = 'Erro na API: ' + (r.msg || 'desconhecido');
+    return;
+  }
+  if(!r.data?.reservado){
+    $('#msg').textContent = (r.data?.motivo==='ocupado')
+      ? 'Esse horário já foi reservado. Tente outro.'
+      : 'Não foi possível reservar: ' + (r.data?.motivo || 'motivo desconhecido');
     await carregarHorarios();
     return;
   }
 
-  // abertura do WhatsApp (pré-reserva "pending" já gravada)
   const preco = `R$ ${serv.preco.toFixed(2).replace('.',',')}`;
   const texto = encodeURIComponent(
     `Olá, sou ${payload.nome}. Quero confirmar:\n` +
     `• ${payload.servico}\n• ${payload.data} às ${payload.hora}\n• Preço: ${preco}`
   );
-  const WHATS_CLINICA = '55XXXXXXXXXXX'; // ajuste aqui
+  const WHATS_CLINICA = '553173551010';
   window.open(`https://wa.me/${WHATS_CLINICA}?text=${texto}`, '_blank');
   $('#msg').textContent = 'Pré-reservado! Vamos confirmar pelo WhatsApp.';
+});
+
+
+/* ==== Inicialização ==== */
+window.addEventListener('DOMContentLoaded', () => {
+  // data mínima = hoje
+  const d = new Date();
+  const hoje = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  if ($('#data')){
+    $('#data').min = hoje;
+    if (!$('#data').value) $('#data').value = hoje;
+  }
+  popularServicos();
+  carregarHorarios();
 });
