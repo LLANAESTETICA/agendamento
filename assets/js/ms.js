@@ -38,6 +38,12 @@ function popularServicos(){
   if ($('#preco') && s0) $('#preco').value = `R$ ${s0.preco.toFixed(2).replace('.',',')}`;
 }
 
+function yyyy_mm_dd(d=new Date()){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), dd=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${dd}`;
+}
+function toMin(hhmm){ const [h,m]=String(hhmm).split(':').map(Number); return h*60+m; }
+
 /* ==== Carregar horários da API ==== */
 async function carregarHorarios(){
   const data = $('#data')?.value;
@@ -58,14 +64,24 @@ async function carregarHorarios(){
   const sel = $('#hora');
   if(!sel) return;
   sel.innerHTML = '';
-  for(const s of slots){
-    if(ESCONDER_OCUPADOS && s.ocupado) continue;
+
+  // ⏱️ Se for hoje, não mostra horários que já passaram (com 5 min de folga)
+  const hojeStr = yyyy_mm_dd();
+  const ehHoje  = data === hojeStr;
+  const agora   = new Date();
+  const minsAgora = agora.getHours()*60 + agora.getMinutes() + 5; // folga de 5 min
+
+  for (const s of slots){
+    if (ehHoje && toMin(s.hora) < minsAgora) continue;       // filtra passado
+    if (ESCONDER_OCUPADOS && s.ocupado) continue;            // sua regra atual
+
     const o = document.createElement('option');
     o.value = s.hora;
     o.textContent = s.ocupado ? `${s.hora} — indisponível` : s.hora;
-    if(s.ocupado){ o.disabled = true; o.style.textDecoration='line-through'; }
+    if (s.ocupado){ o.disabled = true; o.style.textDecoration='line-through'; }
     sel.appendChild(o);
   }
+
   if(!sel.options.length){
     const o = document.createElement('option');
     o.textContent = 'Sem horários livres neste dia';
@@ -73,6 +89,7 @@ async function carregarHorarios(){
     sel.appendChild(o);
   }
 }
+
 
 /* ==== Eventos ==== */
 $('#servico')?.addEventListener('change', () => {
