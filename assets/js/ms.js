@@ -1,5 +1,5 @@
 /* ====== API do Google Apps Script ====== */
-const API = 'https://script.google.com/macros/s/AKfycbyjwTlBjTCm_ieX87ibiAQMB6zbpvWcfjrzKkQd6FcweHC2LJ2CktSQsspofZli7umL/exec';
+const API = 'https://script.google.com/macros/s/AKfycbxPKwXdGfvdSs5Ytm1JRBqx06ruQ2lBApvHSynQNpju249TqihsBebrGh_hGLl-toXY_Q/exec';
 const ESCONDER_OCUPADOS = true; // se false, mostra desabilitado com risco
 
 /* ===== Swiper (se estiver usando) ===== */
