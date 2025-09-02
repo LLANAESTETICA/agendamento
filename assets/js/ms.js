@@ -143,7 +143,7 @@ $('#formAgendar')?.addEventListener('submit', async (e)=>{
     `Olá, sou ${payload.nome}. Quero confirmar:\n` +
     `• ${payload.servico}\n• ${payload.data} às ${payload.hora}\n• Preço: ${preco}`
   );
-  const WHATS_CLINICA = '553173551010';
+  const WHATS_CLINICA = '553196716496';
   window.open(`https://wa.me/${WHATS_CLINICA}?text=${texto}`, '_blank');
   $('#msg').textContent = 'Pré-reservado! Vamos confirmar pelo WhatsApp.';
 });
