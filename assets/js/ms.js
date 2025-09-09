@@ -17,10 +17,19 @@ const $ = (sel) => document.querySelector(sel);
 
 /* ==== Serviços (nome, duração, preço) ==== */
 const SERVICOS = [
-  { id:"limpeza",     nome:"Limpeza de pele",        duracao:60, preco:120 },
-  { id:"sobrancelha", nome:"Design de sobrancelha",  duracao:30, preco:45  },
-  { id:"depilacao",   nome:"Depilação (meia perna)", duracao:45, preco:70  },
-  { id:"massagem",    nome:"Massagem relaxante",     duracao:60, preco:130 },
+  { id:"sobrancelha",  nome:"Design de sobrancelha",           duracao:120, preco:25  },
+  { id:"sobrancelhaH", nome:"Design de sobrancelha com Henna", duracao:120, preco:45  },
+  { id:"SPALabial",    nome:"SPA labial",                      duracao:120, preco:25  },
+  { id:"HydraLips",    nome:"Hydra lips",                      duracao:120, preco:60  },
+  { id:"RevitaFace",   nome:"Revitalização facial",            duracao:120, preco:80  },
+  { id:"Peeling Q",    nome:"Peeling químico",                 duracao:120, preco:140 },
+  { id:"SPAPES",       nome:"SPA dos pés",                     duracao:120 , preco:55 },
+  { id:"EscaldaPés",   nome:"Escalda pés + massagem",          duracao:120 , preco:40 },
+  { id:"DrenagemL",    nome:"Drenagem linfática",              duracao:120 , preco:80 },
+  { id:"Massagem",     nome:"Massagem Relaxante",              duracao:120 , preco:80 },
+  { id:"limpeza",      nome:"Limpeza de pele",                 duracao:120 , preco:120},  
+  { id:"depilacao",    nome:"Depilação (meia perna)",          duracao:120, preco:70  },
+  { id:"massagem",     nome:"Massagem relaxante",               duracao:120, preco:130},
 ];
 
 /* ==== Popular select de serviços + preço inicial ==== */
