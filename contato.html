@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLana Estética — Contato</title>
+
+  <script src="https://kit.fontawesome.com/c1df782baf.js"></script>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><figure><img src="assets/img/logo/logo.png" alt="LLana Estética"></figure></div>
+    <Nav class="menuPrincipal">
+      <a href="index.html">Inicio</a>
+      <a href="empresa.html">Sobre Nós</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="profissionais.html">Profissionais</a>
+      <a href="blog.html">Blogs</a>
+      <a href="depoimentos.html">Cases</a>
+      <a href="contato.html">Contato</a>
+    </Nav>
+    <div class="icone-direita">
+      <div id="menuCelular" class="fa fa-bars"></div>
+      <a class="btn" href="servicos.html#agendar">Agendar Consulta</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="container pad">
+      <h2>Fale com a gente</h2>
+      <div class="grid-2 gap">
+        <div class="card">
+          <p><strong>WhatsApp:</strong> <a href="https://wa.me/553196716496" target="_blank" rel="noopener">+55 (31) 9 6716-496</a></p>
+          <p><strong>E-mail:</strong> contato@exemplo.com.br</p>
+          <p><strong>Endereço:</strong> Rua Exemplo, 123 — Bairro — Cidade/MG</p>
+        </div>
+        <form class="card form-grid" id="formContato">
+          <div class="full"><label class="small">Nome</label><input type="text" name="nome" class="input" required></div>
+          <div><label class="small">E-mail</label><input type="email" name="email" class="input" required></div>
+          <div><label class="small">Assunto</label><input type="text" name="assunto" class="input" required></div>
+          <div class="full"><label class="small">Mensagem</label><textarea name="mensagem" rows="6" class="input" required></textarea></div>
+          <div class="full" style="display:flex; gap:1rem; align-items:center; justify-content:flex-end">
+            <button type="submit" class="btn-rosa">Enviar</button>
+          </div>
+          <p id="contatoMsg" class="small full"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" async></script>
+  <script src="assets/js/ms.js"></script>
+  <script>
+    // feedback simples
+    document.getElementById('formContato')?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      document.getElementById('contatoMsg').textContent = 'Obrigado! Vamos responder em breve.';
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

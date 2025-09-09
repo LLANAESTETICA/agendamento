@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLana Estética — Serviços</title>
+
+  <script src="https://kit.fontawesome.com/c1df782baf.js"></script>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><figure><img src="assets/img/logo/logo.png" alt="LLana Estética"></figure></div>
+    <Nav class="menuPrincipal">
+      <a href="index.html" title="Página Inicial">Inicio</a>
+      <a href="empresa.html" title="Sobre a Clínica">Sobre Nós</a>
+      <a href="servicos.html" title="Serviços do Site">Serviços</a>
+      <a href="profissionais.html" title="Profissionais do Site">Profissionais</a>
+      <a href="blog.html" title="Notícias do Site">Blogs</a>
+      <a href="depoimentos.html" title="Depoimentos do site">Cases</a>
+      <a href="contato.html" title="Fale Conosco">Contato</a>
+    </Nav>
+    <div class="icone-direita">
+      <div id="menuCelular" class="fa fa-bars"></div>
+      <a class="btn" title="Agendar Consulta" href="#agendar">Agendar Consulta</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="container pad">
+      <h2>Nossos serviços</h2>
+      <div class="grid-3 gap">
+        <div class="card"><h4>Limpeza de pele</h4><p>Protocolo completo e seguro.</p></div>
+        <div class="card"><h4>Peeling químico</h4><p>Definido após avaliação. <em>Sob consulta</em>.</p></div>
+        <div class="card"><h4>Massagem relaxante</h4><p>Alívio de tensões do dia a dia.</p></div>
+        <div class="card"><h4>Drenagem linfática</h4><p>Conforto e bem-estar.</p></div>
+        <div class="card"><h4>Design de sobrancelha</h4><p>Harmonia do olhar.</p></div>
+        <div class="card"><h4>SPA dos pés</h4><p>Cuidado e renovação.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== Seção Agendar ===== -->
+    <section id="agendar">
+      <div class="agendar-wrap">
+        <div class="agendar-head">
+          <h3>Agendar com a LLana Estética</h3>
+          <span class="tag-rosa">1 profissional • horários do dia</span>
+        </div>
+        <p class="small" style="margin-bottom:1rem">Escolha o serviço, a data e um horário livre. O valor aparece automaticamente.</p>
+
+        <form id="formAgendar" class="form-grid">
+          <div>
+            <label class="small">Serviço</label>
+            <select id="servico" required></select>
+          </div>
+          <div>
+            <label class="small">Preço</label>
+            <input id="preco" class="input" type="text" readonly>
+          </div>
+          <div>
+            <label class="small">Data</label>
+            <input id="data" class="input" type="date" required>
+          </div>
+          <div>
+            <label class="small">Horário</label>
+            <select id="hora" required></select>
+          </div>
+          <div class="full">
+            <label class="small">Seu nome</label>
+            <input id="nome" class="input" type="text" placeholder="Seu nome completo" required>
+          </div>
+          <div class="full">
+            <label class="small">WhatsApp</label>
+            <input id="whats" class="input" type="tel" placeholder="(DDD) 9 9999-9999" required>
+          </div>
+          <div class="full" style="display:flex; gap:1rem; align-items:center; justify-content:flex-end">
+            <button type="submit" class="btn-rosa">Confirmar pelo WhatsApp</button>
+          </div>
+          <p id="msg" class="small full"></p>
+        </form>
+      </div>
+    </section>
+    <!-- ===== /Seção Agendar ===== -->
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" async></script>
+  <script src="assets/js/ms.js"></script>
+  <!-- o seu JS de agendamento (o que já está no projeto) deve ser carregado via ms.js -->
+</body>
+</html>
