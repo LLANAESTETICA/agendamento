@@ -13,6 +13,13 @@ try {
 } catch(e){}
 
 /* ==== Utils ==== */
+
+function precoTexto(serv){
+  if (!serv || typeof serv.preco !== 'number') return '';
+  if (serv.preco < 0) return 'Sob consulta';
+  return `R$ ${serv.preco.toFixed(2).replace('.',',')}`;
+}
+
 const $ = (sel) => document.querySelector(sel);
 
 /* ==== Serviços (nome, duração, preço) ==== */
@@ -22,7 +29,7 @@ const SERVICOS = [
   { id:"SPALabial",    nome:"SPA labial",                      duracao:120, preco:25  },
   { id:"HydraLips",    nome:"Hydra lips",                      duracao:120, preco:60  },
   { id:"RevitaFace",   nome:"Revitalização facial",            duracao:120, preco:80  },
-  { id:"Peeling Q",    nome:"Peeling químico",                 duracao:120, preco:140 },
+  { id:"Peeling Q",    nome:"Peeling químico",                 duracao:120, preco:-1 },
   { id:"SPAPES",       nome:"SPA dos pés",                     duracao:120 , preco:55 },
   { id:"EscaldaPés",   nome:"Escalda pés + massagem",          duracao:120 , preco:40 },
   { id:"DrenagemL",    nome:"Drenagem linfática",              duracao:120 , preco:80 },
@@ -44,7 +51,7 @@ function popularServicos(){
     sel.appendChild(o);
   });
   const s0 = SERVICOS[0];
-  if ($('#preco') && s0) $('#preco').value = `R$ ${s0.preco.toFixed(2).replace('.',',')}`;
+  if ($('#preco') && s0) $('#preco').value = precoTexto(s0);
 }
 
 function yyyy_mm_dd(d=new Date()){
@@ -103,7 +110,7 @@ async function carregarHorarios(){
 /* ==== Eventos ==== */
 $('#servico')?.addEventListener('change', () => {
   const s = SERVICOS.find(x => x.id === $('#servico').value);
-  if (s && $('#preco')) $('#preco').value = `R$ ${s.preco.toFixed(2).replace('.',',')}`;
+  if (s && $('#preco')) $('#preco').value = precoTexto(s);
   carregarHorarios();
 });
 $('#data')?.addEventListener('change', carregarHorarios);
@@ -147,15 +154,21 @@ $('#formAgendar')?.addEventListener('submit', async (e)=>{
     return;
   }
 
-  const preco = `R$ ${serv.preco.toFixed(2).replace('.',',')}`;
-  const texto = encodeURIComponent(
-    `Olá, sou ${payload.nome}. Quero confirmar:\n` +
-    `• ${payload.servico}\n• ${payload.data} às ${payload.hora}\n• Preço: ${preco}`
-  );
+    // Monta a mensagem sem exibir "R$ -1,00" quando for Sob consulta
+  const linhas = [
+    `Olá, sou ${payload.nome}. Quero confirmar:`,
+    `• ${payload.servico}`,
+    `• ${payload.data} às ${payload.hora}`
+  ];
+  // Só inclui a linha de preço se o valor for >= 0
+  if (serv.preco >= 0) linhas.push(`• Preço: ${precoTexto(serv)}`);
+
+  const texto = encodeURIComponent(linhas.join('\n'));
+
   const WHATS_CLINICA = '553196716496';
   window.open(`https://wa.me/${WHATS_CLINICA}?text=${texto}`, '_blank');
   $('#msg').textContent = 'Pré-reservado! Vamos confirmar pelo WhatsApp.';
-});
+  });
 
 
 /* ==== Inicialização ==== */
